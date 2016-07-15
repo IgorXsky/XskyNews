@@ -1,0 +1,17 @@
+<h1><?=$data['category']['0']['alias']?></h1>
+
+<?php foreach($data['category'] as $news){?>
+
+<div style="margin-top: 20px;">
+    <a href="/articles/read/<?=$news['al']?>"><?=$news['title']?></a>
+</div>
+
+<?php } ?>
+
+<ul class="pagination">
+    <li><a href="#">&laquo;</a></li>
+    <?php for ($i=1; $i<$data['pages']; $i++) { ?>
+        <li><a href="#"><?=$i ?></a></li>
+    <?php } ?>
+    <li><a href="#">&raquo;</a></li>
+</ul>
