@@ -24,10 +24,11 @@ class User extends Model {
 
     public function register($data){
 
-        if( !isset($data['login']) || !isset($data['password'])){
+        if( !isset($data['login']) || !isset($data['email']) || !isset($data['password'])){
             return false;
         }
         $login = $this->db->escape(strtolower($data['login']));
+        $email = $this->db->escape(strtolower($data['email']));
 
         if( $this->getByLogin($login)){
             return false; // login alredy exist
@@ -39,7 +40,7 @@ class User extends Model {
         $sql = "INSERT INTO users
                 SET
                     login = '{$login}',
-                    email = '{$login}',
+                    email = '{$email}',
                     role = 'registered',
                     password = '{$hash}',
                     is_active = '1'

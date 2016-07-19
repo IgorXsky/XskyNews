@@ -2,18 +2,41 @@
 
 class Category extends Model{
 
-    public function getByAlias($alias){
-        $alias = $this->db->escape($alias);
-        $sql = "select * from categories where alias = '{$alias}' limit 1";
-        $result = $this->db->query($sql);
-        return isset($result[0]) ? $result[0] : null;
+    public function save($data, $id = null){
+        if ( !isset($data['alias']) || !isset($data['name'])){
+            return false;
+        }
+
+        $id = (int)$id;
+        $alias = $this->db->escape($data['alias']);
+        $name = $this->db->escape($data['name']);
+        $is_published = isset($data['is_published']) ? 1 : 0;
+
+        if ( !$id ){ // Add new record
+            $sql = "
+                INSERT INTO pages
+                   SET alias = '{$alias}',
+                       name = '{$name}',
+                       is_published = {$is_published}
+            ";
+        } else { // Update existing record
+            $sql = "
+                UPDATE pages
+                   SET alias = '{$alias}',
+                       name = '{$name}',
+                       is_published = {$is_published}
+                 WHERE id = {$id}
+            ";
+        }
+
+        return $this->db->query($sql);
     }
 
-    public function getById($id){
+    public function delete($id){
         $id = (int)$id;
-        $sql = "select * from categories where id = '{$id}' limit 1";
-        $result = $this->db->query($sql);
-        return isset($result[0]) ? $result[0] : null;
+        $sql = "DELETE FROM categories WHERE id = {$id}";
+        return $this->db->query($sql);
     }
+
 
 }

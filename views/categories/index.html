@@ -58,17 +58,21 @@
             <?php } ?>
     </div>
     <div class="col-md-8 content-left">
-
     <?php foreach($data['categories'] as $category_data){$i= 0;?>
         <div style="margin-top: 20px;">
-
         <header><h2><a href="/categories/read/<?=$category_data['alias']?>"><?=$category_data['name']?></a></h2></header>
                 <?php foreach($data['articles'] as $news){
                         if(($news['category_id']) == ($category_data['id'])){
                             $i++;
                             if($i > 5){
                             continue;}?>
-                <div class="articles"><ul><li><?=$news['title']?></li></ul></div>
+                <div class="articles">
+                    <ul>
+                        <li>
+                            <a href="/articles/read/<?=$news['al']?>"><?=$news['title']?></a>
+                        </li>
+                    </ul>
+                </div>
                 <?php } } ?>
         </div>
 

@@ -3552,3 +3552,29 @@ address a:hover {
 		margin-bottom: 1.5em;
 	}
 }
+
+#block_subscriber{
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	background-color: #FFD726;
+	display: none;
+	z-index: 1000;
+	padding: 20px;
+	box-shadow: 1px 1px 20px 2px;
+}
+
+body{
+	padding-top: 50px;
+}
+.starter-template{
+	padding: 40px 15px;
+}
+form{
+	width: 400px;
+	max-width: 400px;
+}
+.alert{
+	width: 400px;
+	max-width: 400px;
+}

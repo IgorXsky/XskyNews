@@ -1,10 +1,49 @@
-<h1><?=$data['article']['title']?></h1>
-<img src="<?=$data['article']['photo']?>">
-<p><?=$data['article']['content']?></p>
 
+<div class="main-body">
+    <div class="wrap">
+        <div class="row">
+            <div class="col-md-2 content-left"></div>
+            <div class="col-md-8 content-left">
+                <div class="blog-posts">
+                    <div class="article-title">
+                        <h3 class="post"><?=$data['article']['title']?></h3>
+                        <div class="last-article">
+                            <img src="<?=$data['article']['photo']?>">
+                            <p class="artext"><?=$data['article']['content']?></p>
+                            <div class="clearfix"></div>
+                            <p>
+                                <a class="span_link" href="#"><?=$data['article']['date']?></a>
+                                <a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>Reading now:<?=$rand_count=rand(0, 5) ?></a>
+                                <a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>Already read:<?=$count=(++$rand_count)?></a>
+                                <a class="span_link" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Likes</a>
+                                <a class="span_link" href="#"><span class="glyphicon glyphicon-thumbs-down"></span>Dislikes</a>
+                            </p>
+                        </div>
+                        <div class="response">
+                            <h4>Comments:</h4>
+                            <?php foreach($data['comments'] as $coment){ ?>
+                            <div class="media response-info">
+                                <div class="media-left response-text-left">
+                                    <h5><?=$coment['title']?></h5>
+                                    <p><?=$coment['content']?></p>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+                        <?php if ( isset ($_SESSION['login'])) { ?>
+                        <a href="/articles/comment/<?=$data['article']['id']?>">Comment</a>
+                        <?php }else{ ?>
+                        <a href="/users/register/">Comment</a>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 content-left"></div>
+        </div>
+    </div>
     <?php if ( isset ($_SESSION['login'])) { ?>
-        <a href="/articles/comment/<?=$data['article']['id']?>">Comment</a>
+    <a href="/articles/comment/<?=$data['article']['id']?>">Comment</a>
     <?php } ?>
-
-<div class="people_read">Сейчас читают: <?=$rand_coun=rand(0, 5) ?> человек</div>
-Что б прокоментировать, регистрируйтесь.
+</div>

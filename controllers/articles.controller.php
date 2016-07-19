@@ -4,6 +4,7 @@ class ArticlesController extends Controller{
 
     public function __construct($data = array()){
         parent::__construct($data);
+
         $this->model = new Article();
     }
 
@@ -13,6 +14,8 @@ class ArticlesController extends Controller{
         if ( isset($params[0]) ){
             $alias = strtolower($params[0]);
             $this->data['article'] = $this->model->getByAlias($alias);
+            $news_id = $this->data['article']['id'];
+            $this->data['comments'] = $this->model->getCommentListByNews($news_id);
         }
     }
 
@@ -32,7 +35,21 @@ class ArticlesController extends Controller{
 
                 Router::redirect('/');
             }
-        }
+    }
+
+
+    public function like(){
+        $uri = explode('/',(App::getRouter()->getUri()));
+        $id = end($uri);
+        $news_id = (int)$id;
+
+        $like = $this->model->setLikes($news_id);
+
+        $this->model->getLike($news_id,$like); //подумать над реализацией метода getLikes
+
+            Router::redirect('/');
+    }
+
 
 
     public function admin_index(){
@@ -57,7 +74,7 @@ class ArticlesController extends Controller{
             $id = isset($_POST['id']) ? $_POST['id'] : null;
             $result = $this->model->save($_POST, $id);
             if ( $result ){
-                Session::setFlash('Page was saved.');
+                Session::setFlash('Article was saved.');
             } else {
                 Session::setFlash('Error.');
             }
