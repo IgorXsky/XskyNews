@@ -2,31 +2,42 @@
 
 class ArticlesController extends Controller{
 
+    public $ArticleModel;
+    public $CommentModel;
+
     public function __construct($data = array()){
         parent::__construct($data);
 
-        $this->model = new Article();
+        $this->ArticleModel = new Article();
+        $this->CommentModel = new Comment();
     }
 
     public function read(){
+
         $params = App::getRouter()->getParams();
 
         if ( isset($params[0]) ){
-            $alias = strtolower($params[0]);
-            $this->data['article'] = $this->model->getByAlias($alias);
+            $id = (int)($params[0]);
+
+            $this->data['article'] = $this->ArticleModel->getById($id);
+            $this->data['article']['read_now'] = $rand_count = rand(1, 5);
+            $new_count = $rand_count + $this->data['article']['already_read'];
+            $this->ArticleModel->setCountReadArticle($id, $new_count);
             $news_id = $this->data['article']['id'];
-            $this->data['comments'] = $this->model->getCommentListByNews($news_id);
+            $this->data['comments'] = $this->CommentModel->getCommentListByNews($news_id);
         }
     }
 
+
     public function comment(){
+
         $uri = explode('/',(App::getRouter()->getUri()));
         $id = end($uri);
         $id = (int)$id; //перебираем uri получаем последний елемент (id)
-        $this->data['comment'] = $this->model->getById($id);
+        $this->data['comment'] = $this->ArticleModel->getById($id);
 
             if ( $_POST ){
-                $result = $this->model->addComment($_POST);
+                $result = $this->CommentModel->addComment($_POST);
                 if ( $result ){
                     Session::setFlash('Comment was saved.');
                 } else {

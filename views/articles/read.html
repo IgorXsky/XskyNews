@@ -13,8 +13,8 @@
                             <div class="clearfix"></div>
                             <p>
                                 <a class="span_link" href="#"><?=$data['article']['date']?></a>
-                                <a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>Reading now:<?=$rand_count=rand(0, 5) ?></a>
-                                <a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>Already read:<?=$count=(++$rand_count)?></a>
+                                <a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>Reading now:<?=$data['article']['read_now'] ?></a>
+                                <a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>Already read:<?=$data['article']['already_read']?></a>
                                 <a class="span_link" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Likes</a>
                                 <a class="span_link" href="#"><span class="glyphicon glyphicon-thumbs-down"></span>Dislikes</a>
                             </p>

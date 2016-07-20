@@ -2,6 +2,11 @@
 
 class Category extends Model{
 
+    public function getListCategory(){
+        $sql = "SELECT * FROM categories";
+        return $this->db->query($sql);
+    }//список категорий
+
     public function save($data, $id = null){
         if ( !isset($data['alias']) || !isset($data['name'])){
             return false;

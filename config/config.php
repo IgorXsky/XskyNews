@@ -12,7 +12,7 @@ Config::set('routes', array(
 
 Config::set('default_route', 'default');
 Config::set('default_language', 'en');
-Config::set('default_controller', 'categories');
+Config::set('default_controller', 'news');
 Config::set('default_action', 'index');
 
 Config::set('db.host', 'localhost');

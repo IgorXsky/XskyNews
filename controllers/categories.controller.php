@@ -2,47 +2,44 @@
 
 class CategoriesController extends Controller
 {
+    public $ArticleModel;
+    public $CategoryModel;
+
+
 
     public function __construct($data = array())
     {
         parent::__construct($data);
-        $this->model = new Category();
-        $this->model = new Article();
+        $this->CategoryModel = new Category();
+        $this->ArticleModel = new Article();
+
 
     }
 
     public function index(){
-        $this->data['categories'] = $this->model->getListCategory();
-        $this->data['articles'] = $this->model->getList();
-        $this->data['spam'] = $this->model->getListSpam();
-        $this->data['slider'] = $this->model->getSliderNews();
-        $this->data['comments'] = $this->model->getCommentsList();
-    }
-
-    public function read(){
         $params = App::getRouter()->getParams();
 
         if (isset($params[0])) {
             $alias = strtolower($params[0]);
-            $arr_num = $this->number = $this->model->getTotalArticleInCategory($alias);
+            //$arr_num = $this->number = $this->ArticleModel->getTotalArticleInCategory($alias);
             //$pagination = new Pagination($arr_num,10, 5);
-            $num = $arr_num['0']['count'];
-            $this->data['pages'] = $pages = ceil($num/5);
-            $this->data['category'] = $this->model->getArticleByCategoryAlias($alias);
+            //$num = $arr_num['0']['count'];
+            //$this->data['pages'] = $pages = ceil($num/5);
+            $this->data['category'] = $this->ArticleModel->getArticleByCategoryAlias($alias);
         }
     }//Не польностю реализован, так как ещё думаю как передавать номер страницы пейджера по параметрам
 
-
-    public function view()
+/*
+    public function read()
     {
         $params = App::getRouter()->getParams();
 
         if (isset($params[0])) {
             $alias = strtolower($params[0]);
-            $this->data['category'] = $this->model->getByAlias($alias);
+            $this->data['category'] = $this->ArticleModel->getByAlias($alias);
         }
     }
-
+*/
     public function admin_index(){
         $this->data['categories'] = $this->model->getListCategory();
         $this->data['articles'] = $this->model->getList();
