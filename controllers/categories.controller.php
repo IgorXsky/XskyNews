@@ -13,7 +13,6 @@ class CategoriesController extends Controller
         $this->CategoryModel = new Category();
         $this->ArticleModel = new Article();
 
-
     }
 
     public function index(){

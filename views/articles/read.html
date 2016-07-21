@@ -1,6 +1,4 @@
-<pre>
-    <?php print_r($data) ?>
-</pre>
+
 <div class="main-body">
     <div class="wrap">
         <div class="row">
@@ -22,18 +20,19 @@
                                 <a class="span_link" href="#"><?=$data['article']['date']?></a>
                                 <a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>Reading now:<?=$data['article']['read_now'] ?></a>
                                 <a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>Already read:<?=$data['article']['already_read']?></a>
-                                <a class="span_link" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Likes</a>
-                                <a class="span_link" href="#"><span class="glyphicon glyphicon-thumbs-down"></span>Dislikes</a>
                             </p>
                         </div>
-                        <div class="response">
+                        <div class="last-article">
                             <h4>Comments:</h4>
-                            <?php foreach($data['comments'] as $coment){ ?>
+                            <?php foreach($data['comments'] as $comment){ ?>
                             <div class="media response-info">
-                                <div class="media-left response-text-left">
-                                    <h5><?=$coment['title']?></h5>
-                                    <p><?=$coment['content']?></p>
-                                </div>
+                                    <h5><?=$comment['title']?></h5>
+                                        <p>
+                                            <a class="span_link" href="/articles/like/<?=$comment['comment_id']?>"><span class="glyphicon glyphicon-thumbs-up"></span><?=$comment['likes']?></a>
+                                            <a class="span_link" href="/articles/dislike/<?=$comment['comment_id']?>"><span class="glyphicon glyphicon-thumbs-down"></span><?=$comment['dislikes']?></a>
+                                        </p>
+                                        <div class="clearfix"></div>
+                                    <p><?=$comment['content']?></p>
                                 <div class="clearfix"> </div>
                             </div>
                             <?php } ?>
@@ -50,7 +49,4 @@
             <div class="col-md-2 content-left"></div>
         </div>
     </div>
-    <?php if ( isset ($_SESSION['login'])) { ?>
-    <a href="/articles/comment/<?=$data['article']['id']?>">Comment</a>
-    <?php } ?>
 </div>

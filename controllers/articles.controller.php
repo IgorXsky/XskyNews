@@ -48,34 +48,62 @@ class ArticlesController extends Controller{
 
     public function comment(){
 
-        $uri = explode('/',(App::getRouter()->getUri()));
-        $id = end($uri);
-        $id = (int)$id; //перебираем uri получаем последний елемент (id)
-        $this->data['comment'] = $this->ArticleModel->getById($id);
+        $params = App::getRouter()->getParams();
 
-            if ( $_POST ){
+        if (isset($params[0])) {
+            $id = ($params[0]);
+
+            $this->data['comment'] = $this->ArticleModel->getById($id);
+
+            if ($_POST) {
                 $result = $this->CommentModel->addComment($_POST);
-                if ( $result ){
+                if ($result) {
                     Session::setFlash('Comment was saved.');
                 } else {
                     Session::setFlash('Error.');
                 }
-                Router::redirect('/');
+                Router::redirect("/articles/read/{$id}");
             }
+        }
 
     }
 
 
     public function like(){
-        $uri = explode('/',(App::getRouter()->getUri()));
-        $id = end($uri);
-        $news_id = (int)$id;
 
-        $like = $this->model->setLikes($news_id);
+        $params = App::getRouter()->getParams();
 
-        $this->model->getLike($news_id,$like); //подумать над реализацией метода getLikes
+        if (isset($params[0])) {
+            $id = ($params[0]);
+            $this->data['comment'] = $this->CommentModel->getCommentById($id);
 
-            Router::redirect('/');
+            $news_id = $this->data['comment'][0]['news_id'];
+            $like = 1 + ($this->data['comment'][0]['likes']);
+
+            $this->CommentModel->addLike($id, $like);
+
+            Router::redirect("/articles/read/{$news_id}");
+        }
+
+    }
+
+
+    public function dislike(){
+
+        $params = App::getRouter()->getParams();
+
+        if (isset($params[0])) {
+            $id = ($params[0]);
+            $this->data['comment'] = $this->CommentModel->getCommentById($id);
+
+            $news_id = $this->data['comment'][0]['news_id'];
+            $dislike = 1 + ($this->data['comment'][0]['dislikes']);
+
+            $this->CommentModel->addDislike($id, $dislike);
+
+            Router::redirect("/articles/read/{$news_id}");
+        }
+
     }
 
 

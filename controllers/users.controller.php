@@ -12,6 +12,7 @@ class UsersController extends Controller{
             $result = $this->model->register($_POST);
             if ($result) {
                 $user = $this->model->getById($result);
+                Session::set('user_id', $user['id']);
                 Session::set('login', $user['login']);
                 Session::set('role', $user['role']);
                 Session::setFlash('Вы зарегистрированы');
@@ -28,6 +29,7 @@ class UsersController extends Controller{
             $user = $this->model->getByLogin($_POST['login']);
             $hash = md5(Config::get('salt').$_POST['password']);
             if ( $user && $user['is_active'] && $hash == $user['password'] ){
+                Session::set('user_id', $user['id']);
                 Session::set('login', $user['login']);
                 Session::set('role', $user['role']);
             }

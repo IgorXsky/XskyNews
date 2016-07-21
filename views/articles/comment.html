@@ -2,11 +2,11 @@
 <pre><?php print_r($data)?></pre>
 <form method="post" action="">
     <div class="form-group">
-        <label for="news_id"></label>
+        <label for="category_id"></label>
         <input type="hidden" id="category_id" name="category_id" value="<?=$data['comment']['category_id'] ?>" class="form-control" />
         <label for="news_id"></label>
         <input type="hidden" id="news_id" name="news_id" value="<?=$data['comment']['id'] ?>" class="form-control" />
-        <!-- Скрытое поле, автоматом подставит id_news и category_id -->
+        <!-- Подставяем id_news & category_id-->
     </div>
     <div class="form-group">
         <label for="title">Comment title</label>

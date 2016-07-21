@@ -3,7 +3,8 @@
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
 define('VIEWS_PATH', ROOT.DS.'views');
-define('COUNT_NEWS', '5');
+define('COUNT_NEWS', 5);
+define('USER_COUNTS', 5);
 
 require_once(ROOT.DS.'lib'.DS.'init.php');
 

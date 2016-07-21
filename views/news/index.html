@@ -1,5 +1,5 @@
-<div>
-    <div class="row">
+
+<div class="row">
         <div class="col-md-8 content-left">
             <div class="slider">
                 <div class="callbacks_wrap">
@@ -16,35 +16,41 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 side-bar">
-            <div class="list_vertical">
-                <section class="accordation_menu">
-                    <div>
-                        <input id="label-1" name="lida" type="radio" checked/>
-                        <label for="label-1" id="item1"><i class="ferme"> </i>Comments<i class="icon-plus-sign i-right1"></i><i class="icon-minus-sign i-right2"></i></label>
-                        <div class="content" id="a1">
-                            <div class="scrollbar" id="style-2">
-                                <div class="force-overflow">
+        <div class="col-md-4 content-left">
+             <div class="list_vertical">
+                    <section class="accordation_menu">
+                            <input id="label-1" name="lida" type="radio" checked/>
+                            <label for="label-1" id="item1"><i class="ferme"> </i>Popular News<i class="icon-plus-sign i-right1"></i><i class="icon-minus-sign i-right2"></i></label>
+                            <div class="content">
+                                <div class="scrollbar">
                                     <div class="popular-post-grids">
-                                        <?php foreach($data['comments'] as $comment){ ?>
-                                            <div class="popular-post-grid">
-                                            <div class="glyphicon-comment"><?=$comment['title']?>
-                                            <p><?=$comment['content'] ?></p></div>
-                                         <?php } ?>
-                                                <div class="clearfix"></div>
+                                        <?php foreach($data['top_news'] as $post){ ?>
+                                        <div class="popular-post-grid">
+                                            <div class="post-img">
+                                                        <a href="/articles/read/<?=$post['id']?>"><img src="<?=$post['photo']?>" alt="<?=$post['title']?>" /></a>
+                                                    </div>
+                                            <div class="post-text">
+                                                        <a class="pp-title" href="/articles/read/<?=$post['id']?>"><?=$post['title']?></a>
+                                                        <p><a class="span_link" href="/articles/read/<?=$post['id']?>"><span class="glyphicon glyphicon-comment"></span><?=$post['total']?></a>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
+                                    <h3><span class="label label-default">Top user</span></h3>
+                                    <ul class="categories">
+                                        <?php foreach($data['top_users'] as $top_user){ ?>
+                                        <li><a href="/comments/show/<?=$top_user['user_id']?>"><span class="glyphicon glyphicon-user"><?=$top_user['login']?></span></a></li>
+                                        <?php } ?>
+                                    </ul>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <div class="clearfix"></div>
+                    </section>
+             </div>
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="row">
+<div class="row">
     <div class="col-md-2">
         <h4>Spam block</h4>
             <p><?php foreach($data['spam'] as $spam){ ?>
@@ -78,7 +84,6 @@
 
     <?php } ?>
     </div>
-
     <div class="col-md-2">
             <h4>Spam block</h4>
             <p><?php foreach(array_reverse(($data['spam']), true) as $spam){ $x=0; ?>
@@ -91,5 +96,4 @@
             </p>
             <?php } ?>
     </div>
-</div>
 </div>

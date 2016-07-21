@@ -1,0 +1,24 @@
+
+<div class="main-body">
+    <div class="wrap">
+        <div class="col-md-2 content-left"></div>
+        <div class="col-md-8 content-left">
+            <div class="last-article">
+                <h4>Comments:</h4>
+                <?php foreach($data['comments'] as $comment){ ?>
+                <div class="media response-info">
+                    <h5><?=$comment['title']?></h5>
+                    <p>
+                        <span class="glyphicon glyphicon-thumbs-up"></span><?=$comment['likes']?>
+                        <span class="glyphicon glyphicon-thumbs-down"></span><?=$comment['dislikes']?>
+                    </p>
+                    <div class="clearfix"></div>
+                    <p><?=$comment['content']?></p>
+                    <div class="clearfix"> </div>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+        <div class="col-md-2 content-left"></div>
+    </div>
+</div>

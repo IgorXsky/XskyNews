@@ -23,7 +23,8 @@ class NewsController extends Controller
         $this->data['articles'] = $this->ArticleModel->getList();
         $this->data['spam'] = $this->SpamModel->getListSpam();
         $this->data['slider'] = $this->ArticleModel->getSliderNews();
-        $this->data['comments'] = $this->CommentModel->getCommentsList();
+        $this->data['top_users'] = $this->CommentModel->getTopUsers();
+        $this->data['top_news'] = $this->ArticleModel->getTopNews();
     }
 
 }

@@ -69,6 +69,20 @@ class Article extends Model{
     }//обновляем значение $count++
 
 
+    public function getTopNews(){
+
+        $sql = "SELECT a.id, a.title, a.date, a.content, a.photo, COUNT(*) AS total
+                FROM articles AS a
+                JOIN comments AS c ON a.id = c.news_id
+                GROUP BY a.id
+                ORDER BY total DESC
+                LIMIT 3
+                ";
+        return $this->db->query($sql);
+
+    }//топ 3 новости
+
+
     /* для пейджера
 
     public function getCountArticleByCategoryAlias($alias){

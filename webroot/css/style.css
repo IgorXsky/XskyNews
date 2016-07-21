@@ -1,9 +1,20 @@
-/*--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
---*/
+.top-users{
+	font-size: 200% ;
+}
+
+#block_subscriber{
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	background-color: #FFD726;
+	display: none;
+	z-index: 1000;
+	padding: 20px;
+	box-shadow: 1px 1px 20px 2px;
+}
+
+
+
 body{
 	padding:0;
 	font-family: 'Varela Round', sans-serif;
@@ -3551,17 +3562,6 @@ address a:hover {
 	.breadcrumb {
 		margin-bottom: 1.5em;
 	}
-}
-
-#block_subscriber{
-	position: fixed;
-	bottom: 0px;
-	right: 0px;
-	background-color: #FFD726;
-	display: none;
-	z-index: 1000;
-	padding: 20px;
-	box-shadow: 1px 1px 20px 2px;
 }
 
 body{
