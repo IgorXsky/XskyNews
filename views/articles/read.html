@@ -1,4 +1,6 @@
-
+<pre>
+    <?php print_r($data) ?>
+</pre>
 <div class="main-body">
     <div class="wrap">
         <div class="row">
@@ -10,6 +12,11 @@
                         <div class="last-article">
                             <img src="<?=$data['article']['photo']?>">
                             <p class="artext"><?=$data['article']['content']?></p>
+                            <ul class="categories">
+                                <?php foreach($data['tags'] as $tag){ ?>
+                                <li><a href="/articles/show/<?=$tag['tag_id']?>"><?=$tag['name']?></a></li>
+                                <?php } ?>
+                            </ul>
                             <div class="clearfix"></div>
                             <p>
                                 <a class="span_link" href="#"><?=$data['article']['date']?></a>

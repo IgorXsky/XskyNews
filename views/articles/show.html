@@ -2,9 +2,8 @@
     <div class="wrap">
         <div class="col-md-2 content-left"></div>
         <div class="col-md-8 content-left">
-            <h1><?=$data['category']['0']['alias']?></h1>
 
-            <?php foreach($data['category'] as $news){?>
+            <?php foreach($data['articles'] as $news){?>
 
             <div style="margin-top: 20px;">
                 <a href="/articles/read/<?=$news['id']?>"><?=$news['title']?></a>

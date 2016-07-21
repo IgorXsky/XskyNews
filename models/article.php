@@ -39,7 +39,7 @@ class Article extends Model{
 
 
     public  function getArticleByCategoryAlias($alias){
-        $sql = "SELECT a.title, a.content, a.al, a.photo, c.alias
+        $sql = "SELECT a.id, a.title, a.content, a.photo, c.alias
                 FROM articles AS a
                 JOIN categories AS c
                 ON a.category_id = c.id
@@ -49,6 +49,16 @@ class Article extends Model{
     }//список новостей по алиасу катеории
 
 
+    public function getNewsByTags($tag_id){
+
+        $sql = "SELECT * FROM articles AS a
+                JOIN articles_tags AS at ON a.id = at.article_id
+                WHERE at.tag_id = '{$tag_id}'
+                ";
+        return $this->db->query($sql);
+    }//поиск новостей по тегам
+
+
     public function setCountReadArticle($id, $new_count){
 
         $sql = "UPDATE articles SET already_read = '{$new_count}'
@@ -56,7 +66,6 @@ class Article extends Model{
                   ";
 
         return $this->db->query($sql);
-
     }//обновляем значение $count++
 
 

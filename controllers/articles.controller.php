@@ -4,12 +4,14 @@ class ArticlesController extends Controller{
 
     public $ArticleModel;
     public $CommentModel;
+    public $TagsModel;
 
     public function __construct($data = array()){
         parent::__construct($data);
 
         $this->ArticleModel = new Article();
         $this->CommentModel = new Comment();
+        $this->TagsModel = new Tags();
     }
 
     public function read(){
@@ -25,6 +27,21 @@ class ArticlesController extends Controller{
             $this->ArticleModel->setCountReadArticle($id, $new_count);
             $news_id = $this->data['article']['id'];
             $this->data['comments'] = $this->CommentModel->getCommentListByNews($news_id);
+            $this->data['tags'] = $this->TagsModel->getTagsList($id);
+        }
+    }
+
+
+    public function show(){
+        $params = App::getRouter()->getParams();
+
+        if (isset($params[0])) {
+            $id = ($params[0]);
+            //$arr_num = $this->number = $this->ArticleModel->getTotalArticleInCategory($alias);
+            //$pagination = new Pagination($arr_num,10, 5);
+            //$num = $arr_num['0']['count'];
+            //$this->data['pages'] = $pages = ceil($num/5);
+            $this->data['articles'] = $this->ArticleModel->getNewsByTags($id);
         }
     }
 
@@ -43,9 +60,9 @@ class ArticlesController extends Controller{
                 } else {
                     Session::setFlash('Error.');
                 }
-
                 Router::redirect('/');
             }
+
     }
 
 

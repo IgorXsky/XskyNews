@@ -29,6 +29,7 @@ class CategoriesController extends Controller
         }
     }//Не польностю реализован, так как ещё думаю как передавать номер страницы пейджера по параметрам
 
+
 /*
     public function read()
     {
