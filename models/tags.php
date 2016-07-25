@@ -12,4 +12,15 @@ class Tags extends Model{
         return $this->db->query($sql);
     }//поиск тегов по id новостей
 
+    public static function getAllTags(){
+
+        $db = mysqli_connect(Config::get('db.host'), Config::get('db.user'), Config::get('db.password'), Config::get('db.db_name'));
+
+        $sql = 'SELECT t.name FROM `tags` AS t';
+
+        $result = mysqli_query($db, $sql);
+        return $result;
+    }//вывод всех тегов
+
+
 }

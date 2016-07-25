@@ -59,6 +59,20 @@ class Article extends Model{
     }//поиск новостей по тегам
 
 
+
+    public function searchTags($tag){
+
+        $sql = "SELECT a.id AS news_id, a.title, a.category_id, a.status, a.already_read, a.date, t.id AS tag_id, t.name
+                FROM articles AS a
+                JOIN articles_tags AS at ON at.article_id = a.id
+                JOIN tags AS t ON at.tag_id = t.id
+                WHERE t.name = '{$tag}'
+                ";
+        return $this->db->query($sql);
+    }//поиск по тегам
+
+
+
     public function setCountReadArticle($id, $new_count){
 
         $sql = "UPDATE articles SET already_read = '{$new_count}'
