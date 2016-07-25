@@ -1,64 +1,56 @@
-<!--<form method="POST" class="form-horizontal" name="search" action="/search">
-    <div class="text-center">
-        <h4>
-            <a class="btn-success" href="/close/search">Сбросить фильтр</a>
-        </h4>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label">От какого(Год-Месяц-День):</label>
-        <div class="col-sm-5">
-            <input name="timeStart" type="text" class="form-control" placeholder="От"
-                   value="<?php if (isset($_POST['timeStart'])) echo $_POST['timeStart']; ?>">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label">До какого(Год-Месяц-День:</label>
-        <div class="col-sm-5">
-            <input name="timeEnd" type="text" class="form-control" placeholder="До"
-                   value="<?php if (isset($_POST['timeEnd'])) echo $_POST['timeEnd']; ?>">
-        </div>
-    </div>
-
-    <div id="category" class=" form-group center-block col-sm-5">
-        <select class="form-control" size="7" name="category">
-            <option disabled>Выберите категорию:</option>
-            <?php foreach ($categories as $category) { ?>
-            <option value="<?php echo $category['id'] ?>"><?php echo $category['name'] ?></option>
-            <?php } ?>
-        </select>
-    </div>
-
-    <div id="reg" class=" form-group center-block col-sm-5">
-        <select class="form-control" size="7" name="region">
-            <option disabled>Выберите регион:</option>
-            <?php foreach ($regions as $region) { ?>
-            <option value="<?php echo $region['id'] ?>"><?php echo $region['name'] ?></option>
-            <?php } ?>
-        </select>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-info">Поиск</button>
-        </div>
-    </div>
-</form>
--->
+<?php $categories = Category::getListCategory(); ?>
 <div class="main-body">
     <div class="wrap">
         <div class="col-md-2 content-left"></div>
         <div class="col-md-8 content-left">
+            <script type="text/javascript" src="/webroot/js/moment-with-locales.min.js"></script>
+            <script type="text/javascript" src="/webroot/js/bootstrap-datetimepicker.min.js"></script>
 
-            <?php foreach($data['search-by-tags'] as $news){?>
+            <form method="POST" class="form-horizontal" name="search" action="/news/search/">
+                <div class="input-group">
+                    <input type="text" name="dateStart" class="form-control" placeholder="search from"/>
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="dateEnd" class="form-control" placeholder="search from"/>
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <div id="category" class=" form-group center-block">
+                    <select class="form-control" name="category">
+                        <option value="0" >select category:</option>
+                        <?php foreach($categories as $category){ ?>
+                            <option value="<?=$category['id'] ?>"><?=$category['name'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button type="submit" class="btn btn-info">Search</button>
+                    </div>
+                </div>
+            </form>
+            <script type="text/javascript">
+                $(function () {
+                    $('.input-group').datetimepicker(
+                            {pickTime: false, language: 'ru'}
+                    );
+                });
+            </script>
 
-            <div style="margin-top: 20px;">
-                <a href="/articles/read/<?=$news['news_id']?>"><?=$news['title']?></a>
-            </div>
 
-            <?php } ?>
+
+            <?php if(isset($data['search'])){
+                foreach($data['search'] as $news){?>
+
+                <div style="margin-top: 20px;">
+                    <a href="/articles/read/<?=$news['id']?>"><?=$news['title']?></a>
+                </div>
+
+                <?php } } ?>
         </div>
         <div class="col-md-2 content-left"></div>
     </div>

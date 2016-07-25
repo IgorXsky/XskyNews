@@ -5,6 +5,7 @@
 
 <link href="/webroot/css/bootstrap.css" rel='stylesheet' type='text/css' />
 <link href="/webroot/css/bootstrap-responsive.css" rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="/webroot/css/bootstrap-datetimepicker.min.css" />
 <script src="/webroot/js/jquery.min.js"></script>
 <link href="/webroot/css/style.css" rel="stylesheet" type="text/css" media="all" />
 
@@ -104,6 +105,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					</ul>
 					</li>
+					<li><a href="/news/search/">Advanced search</a></li>
 					<div class="clearfix"></div>
 				</ul>
 					<div class="search">
@@ -127,14 +129,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							var Tag = <?=$tags?>;
 							$( "#tag" ).autocomplete({source: Tag});
 						</script>
-
-						<!-- search-scripts -->
-						<script src="js/classie.js"></script>
-						<script src="js/uisearch.js"></script>
-							<script>
-								new UISearch( document.getElementById( 'sb-search' ) );
-							</script>
-						<!-- //search-scripts -->
 					</div>
 					<div class="clearfix"></div>
 				</div>
@@ -171,9 +165,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="footer-bottom">
 			<div class="wrap">
 				<div class="copyrights col-md-4">
-					<pre>
-						<?php print_r($_SESSION);?>
-					</pre>
 					<p>© 2016 XskyNews. All Rights Reserved</p>
 				</div>
 				<div class="copyrights col-md-6">

@@ -2,10 +2,16 @@
 
 class Category extends Model{
 
-    public function getListCategory(){
-        $sql = "SELECT * FROM categories";
-        return $this->db->query($sql);
+    public static function getListCategory(){
+
+        $db = mysqli_connect(Config::get('db.host'), Config::get('db.user'), Config::get('db.password'), Config::get('db.db_name'));
+
+        $sql = 'SELECT * FROM categories';
+
+        $result = mysqli_query($db, $sql);
+        return $result;
     }//список категорий
+
 
     public function save($data, $id = null){
         if ( !isset($data['alias']) || !isset($data['name'])){

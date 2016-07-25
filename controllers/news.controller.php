@@ -22,7 +22,7 @@ class NewsController extends Controller
     public function index(){
 
         $this->data['tags'] = Tags::getAllTags();
-        $this->data['categories'] = $this->CategoryModel->getListCategory();
+        $this->data['categories'] = Category::getListCategory();
         $this->data['articles'] = $this->ArticleModel->getList();
         $this->data['spam'] = $this->SpamModel->getListSpam();
         $this->data['slider'] = $this->ArticleModel->getSliderNews();
@@ -36,11 +36,16 @@ class NewsController extends Controller
 
         if ( $_GET && isset($_GET['tag']) ){
             $tag = $_GET['tag'];
-            $this->data['search-by-tags'] = $this->ArticleModel->searchTags($tag);
-
+            $this->data['search'] = $this->ArticleModel->searchTags($tag);
+            print_r($_POST);
+        }
+        if($_POST){
+            $this->data['search'] = $this->ArticleModel->search($_POST);
         }
 
     }
+
+
 
 
     public function login(){

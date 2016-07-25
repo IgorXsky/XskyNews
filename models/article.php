@@ -56,13 +56,12 @@ class Article extends Model{
                 WHERE at.tag_id = '{$tag_id}'
                 ";
         return $this->db->query($sql);
-    }//поиск новостей по тегам
-
+    }//поиск новостей по id тегов
 
 
     public function searchTags($tag){
 
-        $sql = "SELECT a.id AS news_id, a.title, a.category_id, a.status, a.already_read, a.date, t.id AS tag_id, t.name
+        $sql = "SELECT a.id, a.title, a.category_id, a.status, a.already_read, a.date, t.id AS tag_id, t.name
                 FROM articles AS a
                 JOIN articles_tags AS at ON at.article_id = a.id
                 JOIN tags AS t ON at.tag_id = t.id
@@ -70,6 +69,84 @@ class Article extends Model{
                 ";
         return $this->db->query($sql);
     }//поиск по тегам
+
+
+    public function search($data){
+
+        if(isset($data['category'])){
+            $category = $data['category'];
+        }
+        if(!empty($data['dateStart'])){
+            $dateStart = array_reverse(explode(".", $data['dateStart']));
+            $dateStart = implode("-", $dateStart);
+        }
+        if(!empty($data['dateEnd'])){
+            $dateEnd = array_reverse(explode(".", $data['dateEnd']));
+            $dateEnd = implode("-", $dateEnd);
+        }
+
+
+            if(!isset($dateStart) && !isset($dateEnd)){
+
+                if ($category != 0) {
+                    $sql = "SELECT * FROM articles AS a
+                                WHERE a.category_id = '{$category}'
+                                ";
+                } else {
+                    $sql = "SELECT * FROM articles";
+                }
+                return $this->db->query($sql);
+            }
+
+
+            if(isset($dateStart) && isset($dateEnd)){
+
+                if ($category != 0) {
+                    $sql = "SELECT * FROM articles AS a
+                            WHERE a.category_id = '{$category}'
+                            AND a.date BETWEEN '{$dateStart}' AND '{$dateEnd}'
+                    ";
+                }else{
+                    $sql = "SELECT * FROM articles AS a
+                            WHERE a.date BETWEEN '{$dateStart}' AND '{$dateEnd}'
+                    ";
+                }
+                return $this->db->query($sql);
+            }
+
+
+            if(!isset($dateStart) && isset($dateEnd)){
+
+                if ($category != 0) {
+                    $sql = "SELECT * FROM articles AS a
+                            WHERE a.category_id = '{$category}'
+                            AND a.date < '{$dateEnd}'
+                            ";
+                } else {
+                    $sql = "SELECT * FROM articles AS a
+                            WHERE a.date < '{$dateEnd}'
+                            ";
+                }
+                return $this->db->query($sql);
+            }
+
+
+            if(isset($dateStart) && !isset($dateEnd)){
+
+                if ($category != 0) {
+                    $sql = "SELECT * FROM articles AS a
+                            WHERE a.category_id = '{$category}'
+                            AND a.date > '{$dateStart}'
+                            ";
+                } else {
+                    $sql = "SELECT * FROM articles AS a
+                            WHERE a.date > '{$dateStart}'
+                            ";
+                }
+                return $this->db->query($sql);
+            }
+
+    }//расширенный поиск
 
 
 

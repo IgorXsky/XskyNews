@@ -41,7 +41,7 @@ class CategoriesController extends Controller
     }
 */
     public function admin_index(){
-        $this->data['categories'] = $this->model->getListCategory();
+        $this->data['categories'] = Category::getListCategory();
         $this->data['articles'] = $this->model->getList();
         $this->data['spam'] = $this->model->getListSpam();
         $this->data['slider'] = $this->model->getSliderNews();
