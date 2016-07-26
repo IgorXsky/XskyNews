@@ -4,7 +4,7 @@ class Article extends Model{
 
     public function getSliderNews() {
 
-        $sql = "SELECT a.id, a.title, a.date, a.content, a.photo, a.al, c.name
+        $sql = "SELECT a.id, a.title, a.date, a.content, a.photo, c.name
 				FROM articles AS a
 				JOIN categories AS c ON a.category_id = c.id
 				WHERE a.status = 1
@@ -28,14 +28,6 @@ class Article extends Model{
         $result = $this->db->query($sql);
         return isset($result[0]) ? $result[0] : null;
     }// выбрать категорию по id
-
-
-    public function getByAlias($alias){
-        $alias = $this->db->escape($alias);
-        $sql = "SELECT * FROM articles WHERE al = '{$alias}' limit 1";
-        $result = $this->db->query($sql);
-        return isset($result[0]) ? $result[0] : null;
-    }//выбрать новость по алиасу
 
 
     public  function getArticleByCategoryAlias($alias){
@@ -199,47 +191,90 @@ class Article extends Model{
      * Admin functions
      */
 
-    public function save($data, $id = null){
-        if ( !isset($data['alias']) ||
-             !isset($data['title']) ||
+
+    public function searhThisTag($tag){
+
+        $sql = "SELECT t.id AS tag_id, t.name
+                FROM tags AS t
+                WHERE t.name = '{$tag}'
+                ";
+        return $this->db->query($sql);
+    }
+
+    public function new_tag($tag){
+
+        $tag = $this->db->escape($tag);
+
+        $sql = " INSERT INTO tags
+                 SET name = '{$tag}'
+               ";
+        return $this->db->query($sql);
+    }
+
+    public function add_tag($id, $tag_id){
+        $id = (int)$id;
+        $tag_id = (int)$tag_id;
+        $sql = " INSERT INTO articles_tags
+                 SET article_id = {$id},
+                     tag_id = {$tag_id}
+               ";
+        return $this->db->query($sql);
+    }
+
+    public function add_photo($save, $id){
+        if( !isset($save)||
+            !isset($id)){
+            return false;
+        }
+        $id = (int)$id;
+        $photo = $this->db->escape($save);
+
+        $sql = " UPDATE articles
+                 SET photo = '{$photo}'
+                 WHERE id = {$id}
+               ";
+        return $this->db->query($sql);
+
+    }
+
+    public function save($data, $save = null, $id = null){
+        if ( !isset($data['title']) ||
              !isset($data['content']) ||
              !isset($data['category_id']) ||
-             !isset($data['date']) ||
-             !isset($data['photo'])){
+             !isset($data['date'])){
             return false;
         }
 
+
+
         $id = (int)$id;
-        $alias = $this->db->escape($data['alias']);
         $title = $this->db->escape($data['title']);
         $content = $this->db->escape($data['content']);
         $category_id = $this->db->escape($data['category_id']);
-        $date = $this->db->escape($data['date']);
-        $photo = $this->db->escape($data['photo']);
+        $date = array_reverse(explode(".", $data['date']));
+        $date = implode("-", $date);
+        $photo = $this->db->escape($save);
 
-        $is_published = isset($data['is_published']) ? 1 : 0;
+        $status = isset($data['status']) ? 1 : 0;
 
         if ( !$id ){ // Add new record
             $sql = "
                 INSERT INTO articles
-                   SET alias = '{$alias}',
-                       title = '{$title}',
+                   SET title = '{$title}',
                        content = '{$content}',
-                       categoty_id = '{$category_id}',
+                       category_id = '{$category_id}',
                        `date` = '{$date}',
-                       photo = '{$photo}',
-                       is_published = {$is_published}
+                       status = {$status}
             ";
         } else { // Update existing record
             $sql = "
                 UPDATE articles
-                   SET alias = '{$alias}',
-                       title = '{$title}',
+                   SET title = '{$title}',
                        content = '{$content}',
-                       categoty_id = '{$category_id}',
+                       category_id = '{$category_id}',
                        `date` = '{$date}',
                        photo = '{$photo}',
-                       is_published = {$is_published}
+                       status = '{$status}'
                  WHERE id = {$id}
             ";
         }

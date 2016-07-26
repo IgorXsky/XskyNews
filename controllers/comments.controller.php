@@ -19,4 +19,61 @@ class CommentsController extends Controller{
         }
     }
 
+    public function admin_index(){
+        $this->data['comments'] = $this->model->getCommentsList();
+        $this->data['on_moderate'] = $this->model->getModerateList();
+
+    }
+
+
+    public function admin_edit(){
+
+        if ( $_POST ){
+                $params = App::getRouter()->getParams();
+                $id = $params[0];
+            $result = $this->model->edit($_POST, $id);
+            if ( $result ){
+                Session::setFlash('Comment was saved.');
+            } else {
+                Session::setFlash('Error.');
+            }
+            Router::redirect('/admin/comments/');
+        }
+
+        if ( isset($this->params[0]) ){
+            $this->data['comment'] = $this->model->getCommentById($this->params[0]);
+        } else {
+            Session::setFlash('Wrong category id.');
+            Router::redirect('/admin/comments/');
+        }
+    }
+
+
+    public function admin_ok(){
+
+            $params = App::getRouter()->getParams();
+            $id = $params[0];
+            $result = $this->model->moderate($id);
+            if ( $result ){
+                Session::setFlash('Comment activated.');
+            } else {
+                Session::setFlash('Error.');
+            }
+            Router::redirect('/admin/comments/');
+    }
+
+
+    public function admin_delete(){
+        if ( isset($this->params[0]) ){
+            $result = $this->model->delete($this->params[0]);
+            if ( $result ){
+                Session::setFlash('Comment was deleted.');
+            } else {
+                Session::setFlash('Error.');
+            }
+        }
+        Router::redirect('/admin/comments/');
+    }
+
+
 }

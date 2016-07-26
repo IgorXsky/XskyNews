@@ -4,8 +4,10 @@
     <tr>
         <td><b><?=$article_data['title']?></b></td>
         <td align="right">
-            <a href="/admin/articles/edit/<?=$article_data['id']?>"><button class="btn btn-sm btn-primary">edit</button></a>
-            <a href="/admin/articles/delete/<?=$article_data['id']?>" onclick="return confirmDelete();"><button class="btn btn-sm btn-warning">delete</button></a>
+            <a href="/admin/articles/add_photo/<?=$article_data['id']?>"><button class="btn btn-sm btn-primary">add photo</button></a>
+            <a href="/admin/articles/add_tag/<?=$article_data['id']?>"><button class="btn btn-sm btn-primary">add tag</button></a>
+            <a href="/admin/articles/edit/<?=$article_data['id']?>"><button class="btn btn-sm btn-warning">edit</button></a>
+            <a href="/admin/articles/delete/<?=$article_data['id']?>" onclick="return confirmDelete();"><button class="btn btn-sm btn-danger">delete</button></a>
         </td>
     </tr>
 <?php } ?>

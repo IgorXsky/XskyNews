@@ -13,6 +13,15 @@ class Category extends Model{
     }//список категорий
 
 
+    public function getById($id){
+
+        $sql = "SELECT * FROM categories WHERE id = '{$id}' LIMIT 1";
+
+        $result = $this->db->query($sql);
+        return isset($result[0]) ? $result[0] : null;
+    }
+
+
     public function save($data, $id = null){
         if ( !isset($data['alias']) || !isset($data['name'])){
             return false;
@@ -21,23 +30,21 @@ class Category extends Model{
         $id = (int)$id;
         $alias = $this->db->escape($data['alias']);
         $name = $this->db->escape($data['name']);
-        $is_published = isset($data['is_published']) ? 1 : 0;
+        $status = isset($data['status']) ? 1 : 0;
 
         if ( !$id ){ // Add new record
-            $sql = "
-                INSERT INTO pages
-                   SET alias = '{$alias}',
-                       name = '{$name}',
-                       is_published = {$is_published}
-            ";
+            $sql = "INSERT INTO categories
+                    SET alias = '{$alias}',
+                        name = '{$name}',
+                        status = {$status}
+                    ";
         } else { // Update existing record
-            $sql = "
-                UPDATE pages
-                   SET alias = '{$alias}',
-                       name = '{$name}',
-                       is_published = {$is_published}
-                 WHERE id = {$id}
-            ";
+            $sql = "UPDATE categories
+                    SET alias = '{$alias}',
+                        name = '{$name}',
+                        status = {$status}
+                    WHERE id = {$id}
+                   ";
         }
 
         return $this->db->query($sql);

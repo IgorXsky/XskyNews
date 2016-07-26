@@ -1,0 +1,28 @@
+<h3>Comments</h3><br>
+<table class="table table-striped" style="width: 400px;">
+<?php foreach($data['comments'] as $comment) { ?>
+    <tr>
+        <td><b><?=$comment['title']?></b></td>
+        <td align="right">
+            <a href="/admin/comments/edit/<?=$comment['id']?>"><button class="btn btn-sm btn-warning">edit</button></a>
+            <a href="/admin/comments/delete/<?=$comment['id']?>" onclick="return confirmDelete();"><button class="btn btn-sm btn-danger">delete</button></a>
+        </td>
+    </tr>
+<?php } ?>
+</table>
+<h3>Comments to moderate</h3><br>
+<table class="table table-striped" style="width: 400px;">
+    <?php foreach($data['on_moderate'] as $moderate) { ?>
+    <tr>
+        <td><b><?=$moderate['title']?></b><br>
+            <p><?=$moderate['content']?></p>
+            <p>Status:<?=$moderate['status']?></p>
+        </td>
+        <td align="right">
+            <a href="/admin/comments/ok/<?=$moderate['id']?>"><button class="btn btn-sm badge-success">Ok</button></a>
+            <a href="/admin/comments/edit/<?=$moderate['id']?>"><button class="btn btn-sm btn-warning">edit</button></a>
+            <a href="/admin/comments/delete/<?=$moderate['id']?>" onclick="return confirmDelete();"><button class="btn btn-sm btn-danger">delete</button></a>
+        </td>
+    </tr>
+    <?php } ?>
+</table>

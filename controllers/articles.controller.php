@@ -107,16 +107,41 @@ class ArticlesController extends Controller{
     }
 
 
-
     public function admin_index(){
-        $this->data['articles'] = $this->model->getList();
+        $this->data['articles'] = $this->ArticleModel->getList();
     }
 
+
     public function admin_add(){
+
         if ( $_POST ){
-            $result = $this->model->save($_POST);
+
+            $result = $this->ArticleModel->save($_POST);
             if ( $result ){
                 Session::setFlash('Page was saved.');
+            } else {
+
+                Session::setFlash('Error');
+            }
+            Router::redirect('/admin/articles/');
+        }
+    }
+
+    public function admin_add_photo(){
+
+        if ($_POST){
+            $params = App::getRouter()->getParams();
+            $id = $params[0];
+            if ($_FILES && isset($_FILES['photo'])) {
+                $tmp_name = $_FILES['photo']['tmp_name'];
+                $name = $id.'.jpg';
+                $save = '/webroot/uploads/'.$name;
+                $path_save = UPLOADS.DS.$name;
+                move_uploaded_file($tmp_name, $path_save);
+            }
+            $result = $this->ArticleModel->add_photo($save, $id);
+            if ($result) {
+                Session::setFlash('Photo was saved.');
             } else {
                 Session::setFlash('Error.');
             }
@@ -124,11 +149,50 @@ class ArticlesController extends Controller{
         }
     }
 
+    public function admin_add_tag(){
+        if ($_POST) {
+            $params = App::getRouter()->getParams();
+            $id = $params[0];
+            $tag= ($_POST['tag']);
+
+            $search = $this->ArticleModel->searhThisTag($tag);
+            print_r($search);
+            if($search){
+                $result = $this->ArticleModel->add_tag($id,$search[0]['tag_id']);
+                if ($result) {
+                    Session::setFlash('Tag was add.');
+                } else {
+                    Session::setFlash('Error.');
+                }
+            }else{
+                $this->ArticleModel->new_tag($tag);
+                $new_search = $this->ArticleModel->searhThisTag($tag);
+                $result = $this->ArticleModel->add_tag($new_search);
+                if ($result) {
+                    Session::setFlash('Tag was saved.');
+                } else {
+                    Session::setFlash('Error.');
+                }
+            }
+
+            Router::redirect('/admin/articles/');
+        }
+    }
+
     public function admin_edit(){
 
         if ( $_POST ){
-            $id = isset($_POST['id']) ? $_POST['id'] : null;
-            $result = $this->model->save($_POST, $id);
+            $params = App::getRouter()->getParams();
+            $id = $params[0];
+
+            if($_FILES && isset($_FILES['photo'])){
+                $tmp_name = $_FILES['photo']['tmp_name'];
+                $name = $id.'.jpg';
+                $save = '/webroot/uploads/'.$name;
+                $path_save = UPLOADS.DS.$name;
+                move_uploaded_file($tmp_name,$path_save);
+            }
+            $result = $this->ArticleModel->save($_POST, $save, $id);
             if ( $result ){
                 Session::setFlash('Article was saved.');
             } else {
@@ -138,7 +202,7 @@ class ArticlesController extends Controller{
         }
 
         if ( isset($this->params[0]) ){
-            $this->data['page'] = $this->model->getById($this->params[0]);
+            $this->data['article'] = $this->ArticleModel->getById($this->params[0]);
         } else {
             Session::setFlash('Wrong page id.');
             Router::redirect('/admin/articles/');
@@ -147,7 +211,7 @@ class ArticlesController extends Controller{
 
     public function admin_delete(){
         if ( isset($this->params[0]) ){
-            $result = $this->model->delete($this->params[0]);
+            $result = $this->ArticleModel->delete($this->params[0]);
             if ( $result ){
                 Session::setFlash('Article was deleted.');
             } else {

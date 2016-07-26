@@ -7,6 +7,8 @@
     <script src="/js/admin.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/webroot/css/bootstrap-datetimepicker.min.css" />
+    <script src="/webroot/js/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -21,6 +23,7 @@
             <ul class="nav navbar-nav">
                 <li <?php if( App::getRouter()->getController() == 'articles' ) {?>class="active"<?php } ?>><a href="/admin/articles/">Articles</a></li>
                 <li <?php if( App::getRouter()->getController() == 'categories' ) {?>class="active"<?php } ?>><a href="/admin/categories/">Categories</a></li>
+                <li <?php if( App::getRouter()->getController() == 'comments' ) {?>class="active"<?php } ?>><a href="/admin/comments/">Comments</a></li>
                 <li><a href="/users/logout">Logout</a></li>
             </ul>
             <?php } ?>

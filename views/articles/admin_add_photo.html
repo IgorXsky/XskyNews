@@ -1,0 +1,12 @@
+<h3>Add photo</h3><br/>
+<form enctype="multipart/form-data" method="post" action="">
+    <div>
+        <input type="hidden" name="id" value="<?=$data['article']['id']?>" />
+    </div>
+    <div class="form-group">
+        <label for="photo">Photo</label>
+        <input type="file" name="photo" id="photo" class="form-control"/>
+    </div>
+
+    <input type="submit" class="btn btn-success" />
+</form>

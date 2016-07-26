@@ -2,6 +2,25 @@
 
 class Comment extends Model{
 
+    public function getCommentsList()
+    {
+        $sql = "SELECT * FROM comments
+                ORDER BY `status`";
+
+        return $this->db->query($sql);
+    }
+
+
+    public function getModerateList()
+    {
+        $sql = "SELECT * FROM comments
+                WHERE category_id = 7
+                ORDER BY `status`";
+
+        return $this->db->query($sql);
+    }
+
+
     public function addComment($data)
     {
         if (!isset($data['title']) || !isset($data['content']) || !isset($data['news_id'])){
@@ -93,6 +112,46 @@ class Comment extends Model{
 
     }
 
+
+    public function delete($id){
+        $id = (int)$id;
+        $sql = "DELETE FROM comments WHERE id = {$id}";
+        return $this->db->query($sql);
+    }
+
+
+    public function edit($data, $id){
+        if ( !isset($data['id'])){
+            return false;
+        }
+
+        $id = (int)$id;
+        $title = $this->db->escape($data['title']);
+        $content = $this->db->escape($data['content']);
+        $status = isset($data['status']) ? 1 : 0;
+
+            $sql = "UPDATE comments
+                    SET title = '{$title}',
+                        content = '{$content}',
+                        status = {$status}
+                    WHERE id = {$id}
+                   ";
+
+        return $this->db->query($sql);
+    }
+
+
+    public function moderate($id){
+
+        $id = (int)$id;
+
+        $sql = "UPDATE comments
+                    SET status = '1'
+                    WHERE id = {$id}
+                   ";
+
+        return $this->db->query($sql);
+    }
 
 }
 

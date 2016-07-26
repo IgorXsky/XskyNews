@@ -40,7 +40,9 @@ class NewsController extends Controller
             print_r($_POST);
         }
         if($_POST){
+
             $this->data['search'] = $this->ArticleModel->search($_POST);
+
         }
 
     }
@@ -48,20 +50,16 @@ class NewsController extends Controller
 
 
 
-    public function login(){
-        if ( $_POST && isset($_POST['login']) && isset($_POST['password']) ){
-            $user = $this->model->getByLogin($_POST['login']);
-            $hash = md5(Config::get('salt').$_POST['password']);
-            if ( $user && $user['is_active'] && $hash == $user['password'] ){
-                Session::set('user_id', $user['id']);
-                Session::set('login', $user['login']);
-                Session::set('role', $user['role']);
-            }
-            if ( $user['role'] == 'admin'){
-                Router::redirect('/admin/');
-            }
-            Router::redirect('/');
-        }
+    public function admin_index(){
+
+        $this->data['tags'] = Tags::getAllTags();
+        $this->data['categories'] = Category::getListCategory();
+        $this->data['articles'] = $this->ArticleModel->getList();
+        $this->data['spam'] = $this->SpamModel->getListSpam();
+        $this->data['slider'] = $this->ArticleModel->getSliderNews();
+        $this->data['top_users'] = $this->CommentModel->getTopUsers();
+        $this->data['top_news'] = $this->ArticleModel->getTopNews();
+
     }
 
 

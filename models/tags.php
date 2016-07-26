@@ -16,7 +16,7 @@ class Tags extends Model{
 
         $db = mysqli_connect(Config::get('db.host'), Config::get('db.user'), Config::get('db.password'), Config::get('db.db_name'));
 
-        $sql = 'SELECT t.name FROM `tags` AS t';
+        $sql = 'SELECT t.id, t.name FROM `tags` AS t';
 
         $result = mysqli_query($db, $sql);
         return $result;
