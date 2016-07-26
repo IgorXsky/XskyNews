@@ -17,6 +17,10 @@ class Pagination
          *  @var int $itemsCount
          *  @var int $itemsPerPage
          */
+
+        $itemsCount = $options['itemsCount'];
+        $itemsPerPage = $options['itemsPerPage'];
+
         $pagesCount = ceil($itemsCount / $itemsPerPage);
 
         if ($pagesCount == 1) {

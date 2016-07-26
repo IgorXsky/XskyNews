@@ -17,7 +17,7 @@ class Category extends Model{
 
         $sql = "SELECT * FROM categories WHERE id = '{$id}' LIMIT 1";
 
-        $result = $this->db->query($sql);
+        $result  = $this->db->query($sql);
         return isset($result[0]) ? $result[0] : null;
     }
 

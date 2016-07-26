@@ -22,22 +22,24 @@ class CategoriesController extends Controller
 
         if (isset($params[0])) {
             $alias = strtolower($params[0]);
-            $this->data['category'] = $this->ArticleModel->getArticleByCategoryAlias($alias);
-        }
-    }//Не польностю реализован, так как ещё думаю как передавать номер страницы пейджера по параметрам
+
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $total = $this->ArticleModel->getCountArticleByCategoryAlias($alias);
+
+            $this->data['p'] = new Pagination(array(
+                'itemsCount' => $total[0]['count'],
+                'itemsPerPage' => 5,
+                'currentPage' => $page
+            ));
 
 
-/*
-    public function read()
-    {
-        $params = App::getRouter()->getParams();
 
-        if (isset($params[0])) {
-            $alias = strtolower($params[0]);
-            $this->data['category'] = $this->ArticleModel->getByAlias($alias);
+            $this->data['category'] = $this->ArticleModel->getArticleByCategoryAlias($alias, $page);
         }
     }
-*/
+
+
+
     public function admin_index(){
         $this->data['categories'] = Category::getListCategory();
     }

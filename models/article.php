@@ -30,12 +30,17 @@ class Article extends Model{
     }// выбрать категорию по id
 
 
-    public  function getArticleByCategoryAlias($alias){
+    public  function getArticleByCategoryAlias($alias, $page){
+        $page--;
+        $offset = $page * COUNT_NEWS;
+
+
         $sql = "SELECT a.id, a.title, a.content, a.photo, c.alias
                 FROM articles AS a
                 JOIN categories AS c
                 ON a.category_id = c.id
                 WHERE c.alias = '{$alias}'
+                LIMIT {$offset} , 5
                ";
         return $this->db->query($sql);
     }//список новостей по алиасу катеории
@@ -166,8 +171,6 @@ class Article extends Model{
     }//топ 3 новости
 
 
-    /* для пейджера
-
     public function getCountArticleByCategoryAlias($alias){
         $sql = "SELECT COUNT(*) AS count
                 FROM articles AS a
@@ -178,7 +181,7 @@ class Article extends Model{
         return $this->db->query($sql);
     }//количество новостей по катеории
 
-    */
+
 
 
 
