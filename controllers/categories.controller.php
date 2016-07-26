@@ -32,12 +32,9 @@ class CategoriesController extends Controller
                 'currentPage' => $page
             ));
 
-
-
             $this->data['category'] = $this->ArticleModel->getArticleByCategoryAlias($alias, $page);
         }
     }
-
 
 
     public function admin_index(){

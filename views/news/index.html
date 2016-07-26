@@ -1,21 +1,21 @@
 <div class="row">
-        <div class="col-md-8 content-left">
-            <div class="slider">
-                <div class="callbacks_wrap">
-                    <ul class="rslides" id="slider">
-                        <?php foreach($data['slider'] as $slide){ ?>
+    <div class="col-md-8 content-left">
+        <div class="slider">
+            <div class="callbacks_wrap">
+                <ul class="rslides" id="myslider">
+                    <?php foreach($data['slider'] as $slide){ ?>
                         <li>
-                            <img src="<?=$slide['photo']?>">
+                            <img src="<?=$slide['photo']?>" alt="<?=$slide['title']?>">
                             <div class="caption">
                                 <a href="/articles/read/<?=$slide['id']?>"><?=$slide['title']?></a>
                             </div>
                         </li>
-                        <?php } ?>
-                    </ul>
-                </div>
+                    <?php } ?>
+                </ul>
             </div>
         </div>
-        <div class="col-md-4 content-left">
+    </div>
+    <div class="col-md-4 content-left">
              <div class="list_vertical">
                     <section class="accordation_menu">
                             <input id="label-1" name="lida" type="radio" checked/>
@@ -47,8 +47,8 @@
                     </section>
              </div>
         </div>
-        <div class="clearfix"></div>
-    </div>
+    <div class="clearfix"></div>
+</div>
 <div class="row">
     <div class="col-md-2">
         <h4>Spam block</h4>

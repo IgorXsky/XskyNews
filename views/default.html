@@ -1,54 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><?=Config::get('site_name')?></title>
+	<title><?=Config::get('site_name')?></title>
 
-<link href="/webroot/css/bootstrap.css" rel='stylesheet' type='text/css' />
-<link href="/webroot/css/bootstrap-responsive.css" rel='stylesheet' type='text/css' />
-<link rel="stylesheet" href="/webroot/css/bootstrap-datetimepicker.min.css" />
-<script src="/webroot/js/jquery.min.js"></script>
-<link href="/webroot/css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="/webroot/css/bootstrap.css" rel='stylesheet' type='text/css' />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Express News Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+	<script src="/webroot/js/jquery.min.js"></script>
+
+	<link href="/webroot/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- for bootstrap working -->
+
 	<script type="text/javascript" src="/webroot/js/bootstrap.js"></script>
-<!-- //for bootstrap working -->
-<!-- web-fonts -->
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
-<script src="/webroot/js/responsiveslides.min.js"></script>
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+
+	<script src="/webroot/js/responsiveslides.min.js"></script>
 	<script>
 		$(function () {
-		  $("#slider").responsiveSlides({
-			auto: true,
-			nav: true,
-			speed: 500,
-			namespace: "callbacks",
-			pager: true,
-		  });
+			$("#myslider").responsiveSlides({
+				auto: true,
+				nav: true,
+				speed: 500,
+				namespace: "callbacks",
+				pager: true,
+			});
 		});
 	</script>
 	<script type="text/javascript" src="/webroot/js/move-top.js"></script>
-<script type="text/javascript" src="/webroot/js/easing.js"></script>
-<!--/script-->
-<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				$(".scroll").click(function(event){		
-					event.preventDefault();
-					$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
-				});
-			});
-</script>
+	<script type="text/javascript" src="/webroot/js/easing.js"></script>
 
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+
+	<!--/script-->
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
+			});
+		});
+	</script>
+
 
 </head>
+
 <body>
 	<!-- header-section-starts-here -->
 	<div class="header">
@@ -77,7 +76,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="navigation">
 				<nav class="navbar navbar-default" role="navigation">
 		   <div class="wrap">
-			<!--/.navbar-header-->
+
 		
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
@@ -133,16 +132,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="clearfix"></div>
 				</div>
 			</div>
-			<!--/.navbar-collapse-->
-	 <!--/.navbar-->
+
 				</nav>
 		</div>
 	</div>
-	<!-- header-section-ends-here -->
 
-	<!-- content-section-starts-here -->
-	<div class="main-body">
-		<div class="wrap">
+		<div class="main-body">
 			<div class="container">
 				<div class="starter-template">
 
@@ -154,7 +149,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<?=$data['content']?>
 				</div>
-			</div>
 			</div>
 		</div>
 
@@ -183,19 +177,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<script type="text/javascript" src="/webroot/js/close_window.js"></script>
 	</div>
 	<!-- footer-section-ends-here -->
-	<?php if(!isset($_SESSION['login'])){ ?>
+
 	<script type="text/javascript">
 		$(function(){
 			$('#block_subscriber').delay(15000)
 					.show(1);});
 	</script>
-	<?php } ?>
+	<div id="block_subscriber">
+		<h3>Subscribe to our newsletter</h3><br/>
+		<form method="post" action="/users/register">
+			<div class="form-group">
+				<label for="login">Login</label>
+				<input type="text" id="login" name="login" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="text" id="email" name="email" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" class="form-control" />
+			</div>
+			<input type="submit" class="btn btn-success" />
+		</form>
+	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		$().UItoTop({ easingType: 'easeOutQuart' });
 	});
 	</script>
 	<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
-	</div>
 </body>
 </html>
