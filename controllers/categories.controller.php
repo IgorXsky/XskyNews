@@ -28,11 +28,13 @@ class CategoriesController extends Controller
 
             $this->data['p'] = new Pagination(array(
                 'itemsCount' => $total[0]['count'],
-                'itemsPerPage' => 5,
+                'itemsPerPage' => COUNT_NEWS,
                 'currentPage' => $page
             ));
 
             $this->data['category'] = $this->ArticleModel->getArticleByCategoryAlias($alias, $page);
+            $this->data['spam_left'] = Spam::getListLeft();
+            $this->data['spam_right'] = Spam::getListRight();
         }
     }
 

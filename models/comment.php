@@ -45,24 +45,52 @@ class Comment extends Model{
     }
 
 
-    public function getCommentsListByUser($user_id)
+    public function getCommentsListByUser($user_id, $page)
     {
+        $page--;
+        $offset = $page * COUNT_NEWS;
+
         $sql = "SELECT * FROM comments
                 WHERE user_id = '{$user_id}'
-                ORDER BY `likes` DESC";
+                ORDER BY `likes` DESC
+                LIMIT {$offset} , 5";
 
         return $this->db->query($sql);
     }
 
 
-    public function getCommentListByNews($news_id)
+
+    public function getCountCommentsByUser($user_id)
     {
+        $sql = "SELECT COUNT(*) AS count FROM comments
+                WHERE user_id = '{$user_id}'";
+
+        return $this->db->query($sql);
+    }
+
+
+    public function getCountCommentsByNews($news_id)
+    {
+        $sql = "SELECT COUNT(*) AS count
+                FROM comments AS c
+                JOIN articles AS a ON c.news_id = a.id
+                WHERE a.id = '{$news_id}'";
+
+        return $this->db->query($sql);
+    }
+
+
+    public function getCommentListByNews($news_id, $page)
+    {
+        $page--;
+        $offset = $page * COUNT_NEWS;
 
         $sql = "SELECT c.id AS comment_id, c.title, c.content, c.likes, c.dislikes, a.id
                 FROM comments AS c
                 JOIN articles AS a ON c.news_id = a.id
                 WHERE a.id = '{$news_id}'
-                ORDER BY `date` DESC";
+                ORDER BY `date` DESC
+                LIMIT {$offset} , 5";
 
         return $this->db->query($sql);
     }//список комментариев к новости

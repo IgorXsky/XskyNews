@@ -26,8 +26,20 @@ class ArticlesController extends Controller{
             $new_count = $rand_count + $this->data['article']['already_read'];
             $this->ArticleModel->setCountReadArticle($id, $new_count);
             $news_id = $this->data['article']['id'];
-            $this->data['comments'] = $this->CommentModel->getCommentListByNews($news_id);
+
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $total = $this->CommentModel->getCountCommentsByNews($news_id);
+
+            $this->data['p'] = new Pagination(array(
+                'itemsCount' => $total[0]['count'],
+                'itemsPerPage' => COUNT_NEWS,
+                'currentPage' => $page
+            ));
+
+            $this->data['comments'] = $this->CommentModel->getCommentListByNews($news_id, $page);
             $this->data['tags'] = $this->TagsModel->getTagsList($id);
+            $this->data['spam_left'] = Spam::getListLeft();
+            $this->data['spam_right'] = Spam::getListRight();
         }
     }
 

@@ -82,7 +82,6 @@ class Article extends Model{
             $dateEnd = implode("-", $dateEnd);
         }
 
-
             if(!isset($dateStart) && !isset($dateEnd)){
 
                 if ($category != 0) {
@@ -172,21 +171,27 @@ class Article extends Model{
 
 
     public function getCountArticleByCategoryAlias($alias){
+
         $sql = "SELECT COUNT(*) AS count
-                FROM articles AS a
-                JOIN categories AS c
-                ON a.category_id = c.id
-                WHERE c.alias = '{$alias}'
-               ";
+                        FROM articles AS a
+                        JOIN categories AS c
+                        ON a.category_id = c.id
+                        WHERE c.alias = '{$alias}'
+                       ";
         return $this->db->query($sql);
     }//количество новостей по катеории
 
+    public function getCountArticleByTag($tag){
 
+        $sql = "SELECT COUNT(a.title) AS count
+                FROM articles AS a
+                JOIN articles_tags AS at ON at.article_id = a.id
+                JOIN tags AS t ON at.tag_id = t.id
+                WHERE t.name = '{$tag}'
+        ";
 
-
-
-
-
+        return $this->db->query($sql);
+    }//количество новостей по тегу
 
 
 
@@ -204,6 +209,7 @@ class Article extends Model{
         return $this->db->query($sql);
     }
 
+
     public function new_tag($tag){
 
         $tag = $this->db->escape($tag);
@@ -214,6 +220,7 @@ class Article extends Model{
         return $this->db->query($sql);
     }
 
+
     public function add_tag($id, $tag_id){
         $id = (int)$id;
         $tag_id = (int)$tag_id;
@@ -223,6 +230,7 @@ class Article extends Model{
                ";
         return $this->db->query($sql);
     }
+
 
     public function add_photo($save, $id){
         if( !isset($save)||
@@ -240,6 +248,7 @@ class Article extends Model{
 
     }
 
+
     public function save($data, $save = null, $id = null){
         if ( !isset($data['title']) ||
              !isset($data['content']) ||
@@ -247,8 +256,6 @@ class Article extends Model{
              !isset($data['date'])){
             return false;
         }
-
-
 
         $id = (int)$id;
         $title = $this->db->escape($data['title']);

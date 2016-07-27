@@ -15,7 +15,20 @@ class CommentsController extends Controller{
         if (isset($params[0])) {
             $user_id = ($params[0]);
 
-            $this->data['comments'] = $this->model->getCommentsListByUser($user_id);
+
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $total = $this->model->getCountCommentsByUser($user_id);
+
+            $this->data['p'] = new Pagination(array(
+                'itemsCount' => $total[0]['count'],
+                'itemsPerPage' => COUNT_NEWS,
+                'currentPage' => $page
+            ));
+
+            $this->data['comments'] = $this->model->getCommentsListByUser($user_id, $page);
+
+            $this->data['spam_left'] = Spam::getListLeft();
+            $this->data['spam_right'] = Spam::getListRight();
         }
     }
 
