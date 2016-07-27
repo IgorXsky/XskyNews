@@ -46,11 +46,15 @@ class Article extends Model{
     }//список новостей по алиасу катеории
 
 
-    public function getNewsByTags($tag_id){
+    public function getNewsByTags($tag_id, $page){
+
+        $page--;
+        $offset = $page * COUNT_NEWS;
 
         $sql = "SELECT * FROM articles AS a
                 JOIN articles_tags AS at ON a.id = at.article_id
                 WHERE at.tag_id = '{$tag_id}'
+                LIMIT {$offset} , 5
                 ";
         return $this->db->query($sql);
     }//поиск новостей по id тегов
@@ -181,13 +185,13 @@ class Article extends Model{
         return $this->db->query($sql);
     }//количество новостей по катеории
 
-    public function getCountArticleByTag($tag){
+    public function getCountArticleByTag($tag_id){
 
         $sql = "SELECT COUNT(a.title) AS count
                 FROM articles AS a
                 JOIN articles_tags AS at ON at.article_id = a.id
                 JOIN tags AS t ON at.tag_id = t.id
-                WHERE t.name = '{$tag}'
+                WHERE t.id = '{$tag_id}'
         ";
 
         return $this->db->query($sql);

@@ -48,13 +48,21 @@ class ArticlesController extends Controller{
         $params = App::getRouter()->getParams();
 
         if (isset($params[0])) {
-            $id = ($params[0]);
-            //$arr_num = $this->number = $this->ArticleModel->getTotalArticleInCategory($alias);
-            //$pagination = new Pagination($arr_num,10, 5);
-            //$num = $arr_num['0']['count'];
-            //$this->data['pages'] = $pages = ceil($num/5);
-            $this->data['articles'] = $this->ArticleModel->getNewsByTags($id);
+            $tag_id = ($params[0]);
+
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $total = $this->ArticleModel->getCountArticleByTag($tag_id);
+
+            $this->data['p'] = new Pagination(array(
+                'itemsCount' => $total[0]['count'],
+                'itemsPerPage' => COUNT_NEWS,
+                'currentPage' => $page
+            ));
+
+            $this->data['articles'] = $this->ArticleModel->getNewsByTags($tag_id, $page);
         }
+        $this->data['spam_left'] = Spam::getListLeft();
+        $this->data['spam_right'] = Spam::getListRight();
     }
 
 
