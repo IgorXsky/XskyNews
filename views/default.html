@@ -183,12 +183,15 @@
 		<script type="text/javascript" src="/webroot/js/close_window.js"></script>
 	</div>
 	<!-- footer-section-ends-here -->
+	<?php if (!isset ($_SESSION['login'])) { ?>
 
 	<script type="text/javascript">
 		$(function(){
 			$('#block_subscriber').delay(15000)
 					.show(1);});
 	</script>
+
+	<?php } ?>
 	<div id="block_subscriber">
 		<h3>Subscribe to our newsletter</h3><br/>
 		<form method="post" action="/users/register">
